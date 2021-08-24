@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   run_tests:
     docker:
-      - image: circleci/node:12
+      - image: rajeendra/learniac:latest 
     steps:
       - checkout
       - run:
@@ -19,7 +19,7 @@ jobs:
           path: test-results
   build_docker_image:
     docker:
-      - image: circleci/node:12
+      - image: rajeendra/learniac:latest
     steps:
       - checkout
       - setup_remote_docker:
