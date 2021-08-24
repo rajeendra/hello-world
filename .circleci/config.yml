@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   run_tests:
     docker:
-      - image: rajeendra/learniac:latest 
+      - image: circleci/node:12
     steps:
       - checkout
       - run:
@@ -12,14 +12,14 @@ jobs:
       - run:
           name: Run Unit Tests
           command: |
-            ./node_modules/mocha/bin/mocha test/ --reporter mochawesome --reporter-options reportDir=test-results,reportFilename=test-results
+            ./node_modules/mocha/bin/npx mocha test/ --reporter mochawesome --reporter-options reportDir=test-results,reportFilename=test-results
       - store_test_results:
           path: test-results
       - store_artifacts:
           path: test-results
   build_docker_image:
     docker:
-      - image: rajeendra/learniac:latest
+      - image: circleci/node:12
     steps:
       - checkout
       - setup_remote_docker:
