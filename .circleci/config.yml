@@ -34,9 +34,9 @@ jobs:
             docker push $DOCKER_LOGIN/$IMAGE_NAME
   gke_create_cluster:
     docker:
-      - image: rajeendra/terraform-gcp:latest
+      - image: rajeendra/learniac:latest
     environment:
-      CLOUDSDK_CORE_PROJECT: cicd-workshops
+      CLOUDSDK_CORE_PROJECT: kubernetes-terraform-cicd
     steps:
       - checkout
       - run:
@@ -51,16 +51,16 @@ jobs:
             terraform apply plan.txt
   gke_deploy_app:
     docker:
-      - image: ariv3ra/terraform-gcp:latest
+      - image: rajeendra/learniac:latest
     environment:
-      CLOUDSDK_CORE_PROJECT: cicd-workshops
+      CLOUDSDK_CORE_PROJECT: kubernetes-terraform-cicd
     steps:
       - checkout
       - run:
           name: Deploy App to GKE
           command: |
-            export CLUSTER_NAME="cicd-workshops"
-            export TAG=0.2.<< pipeline.number >>
+            export CLUSTER_NAME="kubernetes-terraform-cicd"
+            export TAG=1.0.<< pipeline.number >>
             export DOCKER_IMAGE="docker-image=${DOCKER_LOGIN}/${CIRCLE_PROJECT_REPONAME}:$TAG"
             echo $TF_CLOUD_TOKEN | base64 -d > $HOME/.terraformrc
             echo $GOOGLE_CLOUD_KEYS | base64 -d > $HOME/gcloud_keys
@@ -79,16 +79,16 @@ jobs:
             - "*"
   gke_destroy_cluster:
     docker:
-      - image: ariv3ra/terraform-gcp:latest
+      - image: rajeendra/learniac:latest
     environment:
-      CLOUDSDK_CORE_PROJECT: cicd-workshops
+      CLOUDSDK_CORE_PROJECT: kubernetes-terraform-cicd
     steps:
       - checkout
       - run:
           name: Destroy GKE Cluster
           command: |
-            export CLUSTER_NAME="cicd-workshops"
-            export TAG=0.2.<< pipeline.number >>
+            export CLUSTER_NAME="kubernetes-terraform-cicd"
+            export TAG=1.0.<< pipeline.number >>
             export DOCKER_IMAGE="docker-image=${DOCKER_LOGIN}/${CIRCLE_PROJECT_REPONAME}:$TAG"
             echo $TF_CLOUD_TOKEN | base64 -d > $HOME/.terraformrc
             echo $GOOGLE_CLOUD_KEYS | base64 -d > $HOME/gcloud_keys
