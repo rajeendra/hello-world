@@ -34,7 +34,7 @@ jobs:
             docker push $DOCKER_LOGIN/$IMAGE_NAME
   gke_create_cluster:
     docker:
-      - image: ariv3ra/terraform-gcp:latest
+      - image: rajeendra/terraform-gcp:latest
     environment:
       CLOUDSDK_CORE_PROJECT: cicd-workshops
     steps:
