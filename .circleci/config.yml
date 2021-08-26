@@ -9,7 +9,7 @@ jobs:
           name: Install npm dependencies
           command: |
             npm update
-            npm install --save
+            npm install --save --no-package-lock
       - run:
           name: Run Unit Tests
           command: |
