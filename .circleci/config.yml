@@ -18,8 +18,26 @@ jobs:
       - store_test_results:
           path: test-results
           
+  gke_create_cluster:
+    docker:
+      - image: ariv3ra/terraform-gcp:latest
+    environment:
+      CLOUDSDK_CORE_PROJECT: cicd-workshops
+    steps:
+      - checkout
+      - run:
+          name: Create GKE Cluster
+          command: |
+            echo $TF_CLOUD_TOKEN | base64 -d > $HOME/.terraformrc
+            echo $GOOGLE_CLOUD_KEYS | base64 -d > $HOME/gcloud_keys
+            gcloud auth activate-service-account --key-file ${HOME}/gcloud_keys
+            cd part03/iac_gke_cluster/
+            terraform init
+            terraform plan -var credentials=$HOME/gcloud_keys -out=plan.txt
+            terraform apply plan.txt          
+          
 workflows:
   version: 2
   one_and_two: # this is the name of our workflow
     jobs: # and here we list the jobs we are going to run.
-      - run_tests       
+      - gke_create_cluster       
