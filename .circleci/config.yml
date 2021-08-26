@@ -20,9 +20,9 @@ jobs:
           
   gke_create_cluster:
     docker:
-      - image: ariv3ra/terraform-gcp:latest
+      - image: rajeendra/learniac:latest
     environment:
-      CLOUDSDK_CORE_PROJECT: cicd-workshops
+      CLOUDSDK_CORE_PROJECT: kubernetes-terraform-cicd
     steps:
       - checkout
       - run:
