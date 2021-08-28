@@ -31,10 +31,7 @@ jobs:
             echo $TF_CLOUD_TOKEN | base64 -d > $HOME/.terraformrc
             echo $GOOGLE_CLOUD_KEYS | base64 -d > $HOME/gcloud_keys
             gcloud auth activate-service-account --key-file ${HOME}/gcloud_keys
-            cd part01/iac_gke_cluster/
-            terraform init
-            terraform plan -var credentials=$HOME/gcloud_keys -out=plan.txt
-            terraform apply plan.txt          
+            ls    
           
 workflows:
   version: 2
