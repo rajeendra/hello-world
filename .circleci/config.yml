@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Create GKE Cluster
           command: |
-            echo $TF_CLOUD_TOKEN | base64 -d > $HOME/.terraformrc
+            echo $TF_CLOUD_TOKEN
 
 
                 
