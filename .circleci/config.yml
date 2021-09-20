@@ -111,3 +111,4 @@ workflows:
   build_test:
     jobs:
       - run_tests
+      - build_docker_image
