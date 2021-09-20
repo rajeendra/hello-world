@@ -14,6 +14,7 @@ jobs:
             echo $DOCKER_LOGIN
             echo $DOCKER_PWD
             echo $TAG
+            echo $TAG
             touch test
             npm install --save mocha chai mochawesome
       - run:
@@ -115,3 +116,4 @@ workflows:
     jobs:
       - run_tests
       - build_docker_image
+
