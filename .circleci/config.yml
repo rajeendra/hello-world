@@ -9,6 +9,7 @@ jobs:
           name: Install npm dependencies
           command: |
             echo << pipeline.number >>
+            export TAG=0.2.<< pipeline.number >>
             echo $CIRCLE_PROJECT_REPONAME
             echo $DOCKER_LOGIN
             echo $DOCKER_PWD
