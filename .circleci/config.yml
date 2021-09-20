@@ -8,6 +8,7 @@ jobs:
       - run:
           name: Install npm dependencies
           command: |
+            touch test
             npm install --save mocha chai mochawesome
       - run:
           name: Run Unit Tests
