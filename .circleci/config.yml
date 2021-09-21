@@ -8,12 +8,19 @@ jobs:
       - run:
           name: Install npm dependencies
           command: |
-            mkdir test
-            npm install --save mocha mochawesome chai
+            echo << pipeline.number >>
+            export TAG=0.2.<< pipeline.number >>
+            echo $CIRCLE_PROJECT_REPONAME
+            echo $DOCKER_LOGIN
+            echo $DOCKER_PWD
+            echo $TAG
+            echo $TAG
+            touch test
+            npm install --save mocha chai mochawesome
       - run:
           name: Run Unit Tests
           command: |
-            ./node_modules/mocha/bin/mocha test/ --reporter mochawesome --reporter-options reportDir=test-results,reportFilename=test-results
+            ./node_modules/mocha/bin/mocha --reporter mochawesome --reporter-options reportDir=test-results,reportFilename=test-results
       - store_test_results:
           path: test-results
       - store_artifacts:
@@ -28,6 +35,9 @@ jobs:
       - run:
           name: Build Docker image
           command: |
+            echo '---------------------------------------------'
+            pwd
+            echo '---------------------------------------------'
             export TAG=0.2.<< pipeline.number >>
             export IMAGE_NAME=$CIRCLE_PROJECT_REPONAME
             docker build -t $DOCKER_LOGIN/$IMAGE_NAME -t $DOCKER_LOGIN/$IMAGE_NAME:$TAG .
@@ -105,3 +115,4 @@ workflows:
   build_test:
     jobs:
       - run_tests
+      - build_docker_image
